@@ -1,0 +1,27 @@
+#applicaiton.yml是用户级的资源配置项
+#bootstrap.yml是系统级的，优先级更加高。consul拥有服务配置功能，此文件交于consul进行配置，而consul的配置项则是系统级的
+spring:
+  application:
+    name: cloud-payment-service
+    ####Spring Cloud Consul for Service Discovery
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+
+        # 下面用于修改consul服务器的配置项格式
+      config:
+        profile-separator: '-' # default value is ",",我们的习惯是用'-'分隔profile，例如cloud-payment-service
+        format: YAML  # consul配置项格式
+#        watch:
+#          wait-time: 1  # @RefreshScope 使得consul的服务器配置能够实时刷新，不配置的话默认是55s刷新一次，这里可以修改
+
+# 在consul服务器的Key/value中配置文件目录如下，
+# 分别输入 config/   cloud-payment-service/    data
+# 配置文件中写在data，输入内容k-v配置项
+
+# config/cloud-payment-service/data
+#       /cloud-payment-service-dev/data
+#       /cloud-payment-service-prod/data
