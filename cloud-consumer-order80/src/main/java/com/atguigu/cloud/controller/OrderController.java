@@ -13,7 +13,10 @@ import org.springframework.web.client.RestTemplate;
  */
 @RestController
 public class OrderController {
-    public static final String PaymentSrv_URL = "http://localhost:8001";//先写死，硬编码
+//    public static final String PaymentSrv_URL = "http://localhost:8001";//先写死，硬编码
+
+    // cloud-payment-service 下面可以有多个不同端口的微服务，直接使用http://cloud-payment-service 即可，不需要写死端口号
+    public static final String PaymentSrv_URL = "http://cloud-payment-service";
 
     @Autowired
     private RestTemplate restTemplate;
