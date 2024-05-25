@@ -1,4 +1,4 @@
-package com.atguigu.cloud.resp;
+package com.atguigu.cloud.responce;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

@@ -1,9 +1,7 @@
 package com.atguigu.cloud.controller;
 
 import com.atguigu.cloud.entities.PayDTO;
-import com.atguigu.cloud.resp.ResultData;
-import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.beans.BeanUtils;
+import com.atguigu.cloud.responce.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -19,7 +17,7 @@ public class OrderController {
 
     @Autowired
     private RestTemplate restTemplate;
-    // RestTemplate作用：用来发送http请求，在order模块中向payment模块发送请求
+    // RestTemplate作用：用来发送http请求，在order模块中向payment模块发送请求，便可以直接调用payment模块的接口
 
     /**
      * 一般情况下，通过浏览器的地址栏输入url，发送的只能是get请求
