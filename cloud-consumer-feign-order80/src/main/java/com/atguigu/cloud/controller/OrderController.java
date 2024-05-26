@@ -1,16 +1,12 @@
 package com.atguigu.cloud.controller;
 
-import com.atguigu.cloud.apis.PayFeginApi;
+import cn.hutool.core.date.DateUtil;
+import com.atguigu.cloud.apis.PayFeignApi;
 import com.atguigu.cloud.entities.PayDTO;
 import com.atguigu.cloud.responce.ResultData;
+import com.atguigu.cloud.responce.ReturnCodeEnum;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
 
 /**
  * @ Author：Aijinhui
@@ -22,7 +18,7 @@ public class OrderController {
 
 
     @Resource
-    private PayFeginApi payFeignApi;
+    private PayFeignApi payFeignApi;
 
     @PostMapping("/feign/pay/add")
     public ResultData addOrder(@RequestBody PayDTO payDTO)
@@ -35,7 +31,17 @@ public class OrderController {
     public ResultData getPayInfo(@PathVariable("id") Integer id)
     {
         System.out.println("-------支付微服务远程调用，按照id查询订单支付流水信息");
-        return payFeignApi.getPayInfo(id);
+        ResultData resultData = null;
+        try
+        {
+            System.out.println("调用开始-----:"+ DateUtil.now());
+            resultData = payFeignApi.getPayInfo(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("调用结束-----:"+DateUtil.now());
+            ResultData.fail(ReturnCodeEnum.RC500.getCode(),e.getMessage());
+        }
+        return resultData;
     }
 
     /**

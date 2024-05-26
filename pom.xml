@@ -15,6 +15,16 @@
         <module>cloud-consumer-order80</module>
         <module>cloud-api-commons</module>
         <module>cloud-consumer-feign-order80</module>
+        <module>cloud-gateway9527</module>
+        <module>cloudalibaba-config-nacos-client3377</module>
+        <module>cloudalibaba-consumer-nacos-order83</module>
+        <module>cloudalibaba-provider-payment9001</module>
+        <module>cloudalibaba-provider-payment9002</module>
+        <module>cloudalibaba-sentinel-gateway9528</module>
+        <module>cloudalibaba-sentinel-service8401</module>
+        <module>seata-account-service2003</module>
+        <module>seata-order-service2001</module>
+        <module>seata-storage-service2002</module>
     </modules>
 
     <properties>

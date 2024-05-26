@@ -4,11 +4,49 @@ server:
 spring:
   application:
     name: cloud-consumer-openfeign-order
-  ####Spring Cloud Consul for Service Discovery
   cloud:
+    #### Consul配置
     consul:
       host: localhost
       port: 8500
       discovery:
         prefer-ip-address: true #优先使用服务ip进行注册
         service-name: ${spring.application.name}
+
+    #### openfeign配置
+    openfeign:
+      client:
+        config:
+          default: # 对所有的服务
+            #连接超时时间，默认60s
+            connectTimeout: 3000
+            #读取超时时间
+            readTimeout: 3000
+
+          cloud-payment-service: # 为cloud-provider-payment这个服务单独配置超时时间，单个配置的超时时间将会覆盖全局配置
+            #连接超时时间
+            connectTimeout: 2000
+            #读取超时时间
+            readTimeout: 2000
+      # Apache HttpClient5 配置开启，feign默认是默认使用JDK自带的HttpURLConnection发送HTTP请求，由于默认HttpURLConnection没有连接池、性能和效率比较低，如果采用默认，性能上不是最牛B的，所以加到最大。
+      httpclient:
+        hc5:
+          enabled: true
+      compression:
+        request:
+          enabled: true # 开启压缩请求
+          min-request-size: 2048 # 最小触发压缩的大小
+          mime-types: text/xml,application/xml,application/json # 触发压缩数据类型
+        response:
+          enabled: true #开启压缩响应
+
+# feign日志以什么级别监控哪个接口。公式(三段)：logging.level + 含有@FeignClient注解的完整带包名的接口名 + debug
+# feign默认只响应debug级别的日志
+logging:
+  level:
+    com:
+      atguigu:
+        cloud:
+          apis:
+            PayFeignApi: debug
+
