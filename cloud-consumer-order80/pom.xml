@@ -18,6 +18,11 @@
     </properties>
 
     <dependencies>
+        <!--loadbalancer负载均衡，order模块可对多个patment模块均衡调用-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
         <!--SpringCloud consul discovery -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

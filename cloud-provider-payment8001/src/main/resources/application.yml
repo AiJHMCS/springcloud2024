@@ -9,7 +9,7 @@ spring:
     username: root
     password: 123456
   profiles:
-    active:  # 多环境配置加载内容dev/prod,不写就是默认default配置
+    active: dev # 多环境配置加载内容dev/prod,不写就是默认default配置
 
 # ========================mybatis===================
 mybatis:

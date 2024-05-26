@@ -33,6 +33,6 @@ spring:
 
 # 配置文件中写在data，输入内容k-v配置项。
 # data文件内容如下：
-# server:
+# atguigu:
 #  info: hello atguigui dev
 # 调用的时候直接 server.info即可获取到配置项的值
