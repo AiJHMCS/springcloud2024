@@ -19,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @Configuration
 @LoadBalancerClient(
-        value = "cloud-payment-service",configuration = RestTemplateConfig.class)  // 指定要调用的微服务名称
+        value = "cloud-payment-service",configuration = RestTemplateConfig.class)  // 指定要调用的微服务名称，需要更改负载均衡算法的时候才加上
 public class RestTemplateConfig
 {
     @Bean
