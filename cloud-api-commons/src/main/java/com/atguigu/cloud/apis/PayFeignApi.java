@@ -37,4 +37,13 @@ public interface PayFeignApi {  // PayFeginApi对外暴露以下方法，可供�
      */
     @GetMapping(value = "/pay/get/info")
     String mylb();
+
+    /**
+     * Resilience4j CircuitBreaker 的例子
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/pay/circuit/{id}")
+    String myCircuit(@PathVariable("id") Integer id);
+
 }
