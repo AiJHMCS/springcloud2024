@@ -37,10 +37,38 @@ spring:
 #            - RemoteAddr=192.168.213.1/24 # 外部访问我的IP限制，前三位必须以192.168.24开头，1/24表示第四位是0-255。192.168.24.1/24是 CIDR 表示法。
 #            - Method=GET,POST
             # 自定义断言
-            - My=diamond
+#            - My=diamond
 
         - id: pay_routh2 #pay_routh2                #路由的ID(类似mysql主键ID)，没有固定规则但要求唯一，建议配合服务名
 #          uri: http://localhost:8001                #匹配提供服务的路由地址
           uri: lb://cloud-payment-service                #匹配提供服务的路由地址
           predicates:
             - Path=/pay/gateway/info/**              # 断言，路径相匹配的进行路由
+
+        - id: pay_routh3 #pay_routh3
+          uri: lb://cloud-payment-service                #匹配后提供服务的路由地址
+          predicates:
+            - Path=/pay/gateway/filter/**              # 断言，路径相匹配的进行路由
+#            - Path=/gateway/filter/**              # 断言，为配合PrefixPath测试过滤，暂时注释掉/pay
+#            - Path=/XYZ/abc/{segment}           # 断言，为配合SetPath测试，{segment}之前的内容最后被SetPath中{segment}之前的内容取代
+#          filters:
+#            # 1.请求头
+#            # 指定请求头内容ByName
+#            - AddRequestHeader=X-Request-atguigu1,atguiguValue1  # 请求头kv，若一头含有多参则重写一行设置
+#            - AddRequestHeader=X-Request-atguigu2,atguiguValue2
+#            # 删除请求头ByName
+#            - RemoveRequestHeader=sec-fetch-site      # 删除请求头sec-fetch-site
+#            # 修改请求头ByName
+#            - SetRequestHeader=sec-fetch-mode, Blue-updatebyaijh # 将请求头sec-fetch-mode对应的值修改为Blue-updatebyaijh
+#
+#            # 2.请求参数
+#            - AddRequestParameter=customerId,9527001 # 新增请求参数Parameter：k ，v
+#            - RemoveRequestParameter=customerName   # 删除url请求参数customerName，你传递过来也是null
+#
+#            # 3.回应头
+#            - AddResponseHeader=X-Response-atguigu, BlueResponse # 新增请求参数X-Response-atguigu并设值为BlueResponse
+#            - SetResponseHeader=Date,2099-11-11 # 设置回应头Date值为2099-11-11
+#            - RemoveResponseHeader=Content-Type # 将默认自带Content-Type回应属性删除
+#            - PrefixPath=/pay # 过滤器统一管理前缀
+#            - SetPath=/pay/gateway/{segment}  # 访问http://localhost:9527/XYZ/abc/filter等于访问http://localhost:9527/pay/gateway/filter
+#            - RedirectTo=302, http://www.atguigu.com/ # 访问http://localhost:9527/pay/gateway/filter跳转到http://www.atguigu.com/

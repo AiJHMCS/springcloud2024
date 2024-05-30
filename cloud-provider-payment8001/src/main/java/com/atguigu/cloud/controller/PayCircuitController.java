@@ -46,5 +46,6 @@ public class PayCircuitController
     {
         return "Hello, myRatelimit欢迎到来 inputId:  "+id+" \t " + IdUtil.simpleUUID();
     }
+    
 }
 
