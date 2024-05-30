@@ -8,16 +8,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.util.Map;
-
 /**
  * @ Author：Aijinhui
- * @ Description：
+ * @ Description：全局过滤器，不需要配置就可直接生效
  * @ Date：2024-05-30-17:12
  */
 @Component
 @Slf4j
-public class MyGlobalFilter implements GlobalFilter, Ordered {
+public class MyGlobalGatewayFilter implements GlobalFilter, Ordered {
     private static final String BEGIN_VISIT_TIME = "begin_visit_time";//开始访问时间
 
     @Override

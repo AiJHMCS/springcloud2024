@@ -51,7 +51,8 @@ spring:
             - Path=/pay/gateway/filter/**              # 断言，路径相匹配的进行路由
 #            - Path=/gateway/filter/**              # 断言，为配合PrefixPath测试过滤，暂时注释掉/pay
 #            - Path=/XYZ/abc/{segment}           # 断言，为配合SetPath测试，{segment}之前的内容最后被SetPath中{segment}之前的内容取代
-#          filters:
+          filters:
+             - My=atguigu  # 自定义的单一内置过滤器
 #            # 1.请求头
 #            # 指定请求头内容ByName
 #            - AddRequestHeader=X-Request-atguigu1,atguiguValue1  # 请求头kv，若一头含有多参则重写一行设置
