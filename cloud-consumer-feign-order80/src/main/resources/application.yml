@@ -77,7 +77,7 @@ logging:
 #      cloud-payment-service:
 #        baseConfig: default
 
-## Resilience4j CircuitBreaker 按照时间：TIME_BASED 的例子
+## Resilience4j CircuitBreaker 按照时间：TIME_BASED 的例熔断例子
 #resilience4j:
 #  timelimiter:
 #    configs:
@@ -100,7 +100,7 @@ logging:
 #      cloud-payment-service:
 #        baseConfig: default
 
-#####resilience4j bulkhead 的例子
+#####resilience4j bulkhead 的隔离例子
 #resilience4j:
 #  bulkhead:
 #    configs:
@@ -127,7 +127,7 @@ logging:
 #        baseConfig: default
 ## spring.cloud.openfeign.circuitbreaker.group.enabled 请设置为false 新启线程和原来主线程脱离
 
-####resilience4j ratelimiter 限流的例子
+####resilience4j ratelimiter 的限流例子
 resilience4j:
   ratelimiter:
     configs:
@@ -138,3 +138,12 @@ resilience4j:
     instances:
       cloud-payment-service:
         baseConfig: default
+
+# zipkin图形展现地址和采样率设置
+management:
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0 #采样率默认为0.1(0.1就是10次只能有一次被记录下来)，值越大收集越及时。

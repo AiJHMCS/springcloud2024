@@ -1,5 +1,6 @@
 # applicaiton.yml是用户级的资源配置项
-# bootstrap.yml是系统级的，优先级更加高。consul拥有服务配置功能，此文件交于consul进行配置，而consul的配置项则是系统级的
+# bootstrap.yml是系统级的，优先级更加高。consul拥有服务配置功能，
+# 此文件交于consul进行配置，而consul的配置项则是系统级的
 spring:
   application:
     name: cloud-payment-service
