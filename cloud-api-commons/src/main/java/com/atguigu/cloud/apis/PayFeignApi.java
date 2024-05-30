@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @ Description：
  * @ Date：2024-05-26-17:13
  */
-@FeignClient(value = "cloud-payment-service")  // PayFeginApi是cloud-payment-service微服务的Feign接口，可供其他微服务调用
-public interface PayFeignApi {  // PayFeginApi对外暴露以下方法，可供其他微服务调用
+//@FeignClient(value = "cloud-payment-service")  // PayFeginApi是cloud-payment-service微服务的Feign接口，可供其他微服务调用
+@FeignClient(value = "cloud-gateway")  // 安全起见，其他微服务调用此处的核心微服务（cloud-payment-service），先找网关，再根据网关微服务yml文件中绑定的路由地址去找核心微服务
+public interface PayFeignApi {  // PayFeginApi对外暴露cloud-payment-service的以下方法，可供其他微服务调用
     /**
      * 新增一条支付相关流水记录
      * @param payDTO
@@ -69,5 +70,20 @@ public interface PayFeignApi {  // PayFeginApi对外暴露以下方法，可供�
      */
     @GetMapping(value = "/pay/micrometer/{id}")
     String myMicrometer(@PathVariable("id") Integer id);
+
+    /**
+     * GateWay进行网关测试案例01
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/pay/gateway/get/{id}")
+    ResultData getById(@PathVariable("id") Integer id);
+
+    /**
+     * GateWay进行网关测试案例02
+     * @return
+     */
+    @GetMapping(value = "/pay/gateway/info")
+    ResultData<String> getGatewayInfo();
 
 }

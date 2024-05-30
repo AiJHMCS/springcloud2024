@@ -1,0 +1,42 @@
+server:
+  port: 9527
+
+spring:
+  application:
+    name: cloud-gateway #以微服务注册进consul或nacos服务列表内
+  cloud:
+    consul: #配置consul地址
+      host: localhost
+      port: 8500
+      discovery:
+        prefer-ip-address: true
+        service-name: ${spring.application.name}
+    gateway:
+#      8001是真正被调用的核心，我们不想暴露8001端口，希望在8001真正的支付微服务外面套一层9527网关
+#      添加网关之前：
+#      GET http://localhost:8001/pay/gateway/get/1
+#      GET http://localhost:8001/pay/gateway/info
+#      添加网关之后：
+#      GET http://localhost:9527/pay/gateway/get/1
+#      GET http://localhost:9527/pay/gateway/info
+#      目前8001支付微服务前面添加GateWay成功，通过9527访问8001成功
+      routes:
+        - id: pay_routh1 #pay_routh1                #路由的ID(类似mysql主键ID)，没有固定规则但要求唯一，建议配合服务名
+#          uri: http://localhost:8001                #匹配提供服务的路由地址，存在端口写死问题
+          uri: lb://cloud-payment-service          #匹配提供服务的路由地址，固定格式（如：lb://myservice）,lb表示支持负载均衡，这样cloud-payment-service的端口随便变换都可以访问
+          predicates:
+            # （断言）下面是路由是否生效的条件，多条会以and相连接，也就是都为true才生效，否则回false
+            - Path=/pay/gateway/get/**              # 断言，路径相匹配的进行路由
+#            - After=2024-05-30T11:06:54.852242300+08:00[Asia/Shanghai]  # 在指定时间之后才生效，
+#            - Before=2024-05-30T11:11:00.852242300+08:00[Asia/Shanghai]
+#            - Between=2024-05-30T11:06:54.852242300+08:00[Asia/Shanghai], 2024-05-30T11:11:45.852242300+08:00[Asia/Shanghai]
+#            - Cookie=username, admin
+#            - Header=X-Request-Id, \d+  # 请求头要有X-Request-Id属性并且值为整数
+#            - Host=**.atguigu.com # 与之匹配的域名应是atguigu.com，多组以 , 分隔
+#            - Query=username, \d+  # 要有参数名username并且值还要是整数才能路由，即 http://localhost:9527/pay/gateway/get/3?username=123
+            - RemoteAddr=192.168.24.1/24 # 外部访问我的IP限制，前三位必须以192.168.24开头，1/24表示第四位是0-255。192.168.24.1/24是 CIDR 表示法。
+        - id: pay_routh2 #pay_routh2                #路由的ID(类似mysql主键ID)，没有固定规则但要求唯一，建议配合服务名
+#          uri: http://localhost:8001                #匹配提供服务的路由地址
+          uri: lb://cloud-payment-service                #匹配提供服务的路由地址
+          predicates:
+            - Path=/pay/gateway/info/**              # 断言，路径相匹配的进行路由
