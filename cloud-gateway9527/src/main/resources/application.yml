@@ -34,7 +34,11 @@ spring:
 #            - Header=X-Request-Id, \d+  # 请求头要有X-Request-Id属性并且值为整数
 #            - Host=**.atguigu.com # 与之匹配的域名应是atguigu.com，多组以 , 分隔
 #            - Query=username, \d+  # 要有参数名username并且值还要是整数才能路由，即 http://localhost:9527/pay/gateway/get/3?username=123
-            - RemoteAddr=192.168.24.1/24 # 外部访问我的IP限制，前三位必须以192.168.24开头，1/24表示第四位是0-255。192.168.24.1/24是 CIDR 表示法。
+#            - RemoteAddr=192.168.213.1/24 # 外部访问我的IP限制，前三位必须以192.168.24开头，1/24表示第四位是0-255。192.168.24.1/24是 CIDR 表示法。
+#            - Method=GET,POST
+            # 自定义断言
+            - My=diamond
+
         - id: pay_routh2 #pay_routh2                #路由的ID(类似mysql主键ID)，没有固定规则但要求唯一，建议配合服务名
 #          uri: http://localhost:8001                #匹配提供服务的路由地址
           uri: lb://cloud-payment-service                #匹配提供服务的路由地址
